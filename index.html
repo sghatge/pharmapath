@@ -20,7 +20,7 @@
 <meta property="og:url" content="https://sghatge.github.io/pharmapath/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="style.css">
 <script type="application/ld+json">
 {
@@ -44,8 +44,8 @@
 <header class="topbar">
   <div class="wrap bar">
     <a class="brand" href="#home" aria-label="Pharmapath Pathology Lab home">
-      <img src="icons/logo.svg" alt="" width="40" height="40">
-      <span><b>Pharmapath</b><small>Pathology Lab</small></span>
+      <img src="icons/logo.svg" alt="" width="38" height="38">
+      <span><b>Pharmapath</b><small>Pathology Lab · Manjari BK</small></span>
     </a>
     <nav class="nav" id="nav" aria-label="Main">
       <a href="#packages">Packages</a>
@@ -64,169 +64,180 @@
 
 <main id="main">
 
-<!-- HERO -->
 <section id="home" class="hero">
   <div class="wrap hero-grid">
-    <div>
-      <p class="eyebrow">Manjari BK · Pune</p>
-      <h1>Accurate lab tests, <span>collected at your home.</span></h1>
-      <p class="lead">Health checkups from ₹499, free home sample collection, reports on WhatsApp, home care and a medical store — all in one place. <strong id="heroHours">Open 24 hours.</strong></p>
+    <div class="hero-copy">
+      <h1>Blood tests at home. Reports on WhatsApp.</h1>
+      <p class="lead">Pharmapath Pathology Lab in Manjari BK collects your sample at home for free. Health checkups start at ₹499, and there's a medical store under the same roof.</p>
       <div class="cta-row">
-        <a class="btn btn-wa" href="#book">Book on WhatsApp</a>
-        <a class="btn btn-ghost" href="#packages">See packages</a>
+        <a class="btn btn-wa btn-lg" href="#book">Book a home collection</a>
+        <a class="btn btn-line" id="heroCall" href="tel:+919172899472">Call 91728 99472</a>
       </div>
-      <ul class="trust">
-        <li>Free home collection</li><li>Reports on WhatsApp</li><li>Medical store & delivery</li>
+      <ul class="facts">
+        <li><strong>Free</strong> home sample collection</li>
+        <li><strong id="heroHours">Open 24 hours</strong> at the lab</li>
+        <li><strong>Same day</strong> for most routine reports</li>
       </ul>
     </div>
-    <aside class="offer card" id="heroOffer" aria-label="Featured package"></aside>
+    <figure class="rack-wrap">
+      <div class="rack" id="rack" role="list" aria-label="Health checkup packages"></div>
+      <div class="rack-base" aria-hidden="true"></div>
+      <figcaption>Tap a tube to book that checkup</figcaption>
+    </figure>
   </div>
 </section>
 
-<!-- PACKAGES -->
+<section class="steps-band" aria-label="How home collection works">
+  <ol class="wrap steps">
+    <li><b>Send your booking</b><span>Choose a package or tests and send it on WhatsApp.</span></li>
+    <li><b>We come to you</b><span>A trained collector visits your home at your chosen time.</span></li>
+    <li><b>Get your report</b><span>The report arrives on your WhatsApp number.</span></li>
+  </ol>
+</section>
+
 <section id="packages" class="section">
   <div class="wrap">
-    <div class="head"><p class="eyebrow">Health packages</p><h2>Checkups from ₹499</h2><p>Tap a package to book it. Fasting packages need 10–12 hours without food (water is fine).</p></div>
-    <div class="grid pkgs" id="pkgGrid"></div>
+    <div class="head">
+      <h2>Health checkup packages</h2>
+      <p>Each colour matches the tube cap on our rack. Packages marked fasting need 10–12 hours without food; water is fine.</p>
+    </div>
+    <div class="pkgs" id="pkgGrid"></div>
   </div>
 </section>
 
-<!-- TESTS -->
-<section id="tests" class="section alt">
+<section id="tests" class="section tint">
   <div class="wrap">
-    <div class="head"><p class="eyebrow">Pathology tests</p><h2>Find a test</h2><p>Add tests to your booking. Prices are confirmed on WhatsApp.</p></div>
+    <div class="head">
+      <h2>Find a single test</h2>
+      <p>Add the tests your doctor asked for. We confirm the price on WhatsApp.</p>
+    </div>
     <div class="test-tools">
       <label class="sr" for="testSearch">Search tests</label>
-      <input id="testSearch" type="search" placeholder="Search e.g. thyroid, sugar, CBC" autocomplete="off">
+      <input id="testSearch" type="search" placeholder="Search: thyroid, sugar, CBC…" autocomplete="off">
       <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
     </div>
     <ul class="test-list" id="testList"></ul>
-    <div class="picked card" id="pickedBar" hidden>
+    <div class="picked" id="pickedBar" hidden>
       <span id="pickedCount">0 tests selected</span>
       <a class="btn btn-wa" href="#book">Continue to booking</a>
     </div>
   </div>
 </section>
 
-<!-- BOOK -->
 <section id="book" class="section">
-  <div class="wrap narrow">
-    <div class="head"><p class="eyebrow">Booking</p><h2>Book a test or home collection</h2><p>Fill this in and WhatsApp opens with your booking ready to send to the lab.</p></div>
-    <form class="card form" id="bookForm" novalidate>
-      <div class="field"><label for="bName">Patient name</label><input id="bName" name="name" required autocomplete="name"></div>
-      <div class="two">
-        <div class="field"><label for="bPhone">Mobile number</label><input id="bPhone" name="phone" type="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" required autocomplete="tel-national" placeholder="10-digit mobile"></div>
-        <div class="field"><label for="bAge">Age</label><input id="bAge" name="age" type="number" min="0" max="120" inputmode="numeric"></div>
-      </div>
-      <div class="field"><label for="bPkg">Package</label><select id="bPkg" name="package"><option value="">— No package / individual tests —</option></select></div>
-      <div class="field"><span class="label">Selected tests</span><div id="bTests" class="selected-tests muted">None — add from the Tests section above (optional)</div></div>
-      <fieldset class="field"><legend class="label">Where</legend>
-        <label class="radio"><input type="radio" name="mode" value="Home sample collection" checked> Home collection (free)</label>
-        <label class="radio"><input type="radio" name="mode" value="Visit the lab"> I'll visit the lab</label>
-      </fieldset>
-      <div class="field" id="addrWrap"><label for="bAddr">Address for collection</label><textarea id="bAddr" name="address" rows="2" autocomplete="street-address"></textarea></div>
-      <div class="two">
-        <div class="field"><label for="bDate">Date</label><input id="bDate" name="date" type="date" required></div>
-        <div class="field"><label for="bSlot">Time slot</label><select id="bSlot" name="slot"><option>6–8 AM</option><option>8–10 AM</option><option>10 AM–12 PM</option><option>12–3 PM</option><option>3–6 PM</option><option>6–9 PM</option></select></div>
-      </div>
-      <label class="consent"><input type="checkbox" id="bConsent" required> I agree that Pharmapath may use these details to contact me and share my report on this WhatsApp number. <a href="privacy.html">Privacy policy</a></label>
-      <p class="err" id="bErr" role="alert"></p>
-      <button class="btn btn-wa wide" type="submit">Send booking on WhatsApp</button>
-    </form>
-  </div>
-</section>
-
-<!-- HOME CARE -->
-<section id="homecare" class="section alt">
-  <div class="wrap">
-    <div class="head"><p class="eyebrow">Home care</p><h2>Care at your doorstep</h2><p>Trained staff visit your home in Manjari and nearby areas.</p></div>
-    <div class="grid svc" id="careGrid"></div>
-  </div>
-</section>
-
-<!-- STORE -->
-<section id="store" class="section">
-  <div class="wrap two-col">
+  <div class="wrap book-grid">
     <div>
-      <p class="eyebrow">Medical store</p>
+      <div class="head">
+        <h2>Book a test</h2>
+        <p>Fill this in and WhatsApp opens with your booking ready to send.</p>
+      </div>
+      <form class="form" id="bookForm" novalidate>
+        <div class="field"><label for="bName">Patient name</label><input id="bName" name="name" required autocomplete="name"></div>
+        <div class="two">
+          <div class="field"><label for="bPhone">Mobile number</label><input id="bPhone" name="phone" type="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" required autocomplete="tel-national" placeholder="10 digits"></div>
+          <div class="field"><label for="bAge">Age</label><input id="bAge" name="age" type="number" min="0" max="120" inputmode="numeric"></div>
+        </div>
+        <div class="field"><label for="bPkg">Package</label><select id="bPkg" name="package"><option value="">No package, single tests only</option></select></div>
+        <div class="field"><span class="label">Single tests</span><div id="bTests" class="selected-tests muted">None added yet. Pick them in the tests list above.</div></div>
+        <fieldset class="field seg"><legend class="label">Where should we collect?</legend>
+          <label><input type="radio" name="mode" value="Home sample collection" checked><span>At my home (free)</span></label>
+          <label><input type="radio" name="mode" value="Visit the lab"><span>I'll come to the lab</span></label>
+        </fieldset>
+        <div class="field" id="addrWrap"><label for="bAddr">Collection address</label><textarea id="bAddr" name="address" rows="2" autocomplete="street-address"></textarea></div>
+        <div class="two">
+          <div class="field"><label for="bDate">Date</label><input id="bDate" name="date" type="date" required></div>
+          <div class="field"><label for="bSlot">Time</label><select id="bSlot" name="slot"><option>6–8 AM</option><option>8–10 AM</option><option>10 AM–12 PM</option><option>12–3 PM</option><option>3–6 PM</option><option>6–9 PM</option></select></div>
+        </div>
+        <label class="consent"><input type="checkbox" id="bConsent" required><span>Pharmapath may use these details to contact me and send my report to this WhatsApp number. <a href="privacy.html">Privacy policy</a></span></label>
+        <p class="err" id="bErr" role="alert"></p>
+        <button class="btn btn-wa btn-lg wide" type="submit">Send booking on WhatsApp</button>
+      </form>
+    </div>
+    <aside class="chat" aria-label="Preview of your WhatsApp message">
+      <div class="chat-top"><img src="icons/logo.svg" alt="" width="32" height="32"><div><b>Pharmapath Lab</b><small>WhatsApp · 91728 99472</small></div></div>
+      <div class="chat-body"><p class="bubble" id="preview" aria-live="polite"></p></div>
+      <p class="chat-note">This is the message you'll send. Nothing is sent until you tap send in WhatsApp.</p>
+    </aside>
+  </div>
+</section>
+
+<section id="homecare" class="section tint">
+  <div class="wrap care">
+    <div class="head">
+      <h2>Care at home</h2>
+      <p>Trained staff visit homes in Manjari and nearby areas. Tap a service to request a visit.</p>
+    </div>
+    <div class="care-list" id="careGrid"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap duo">
+    <div id="store" class="panel">
       <h2>Medicines delivered home</h2>
-      <p>Send your prescription on WhatsApp. We confirm availability and price, then deliver to your door.</p>
+      <p>Tell us what you need, then attach your prescription photo in WhatsApp. We confirm stock and price before delivery.</p>
+      <form class="form" id="storeForm" novalidate>
+        <div class="field"><label for="sName">Your name</label><input id="sName" required autocomplete="name"></div>
+        <div class="field"><label for="sNeed">Medicines or products</label><textarea id="sNeed" rows="2" required placeholder="Or write: sending prescription photo"></textarea></div>
+        <div class="field"><label for="sAddr">Delivery address</label><textarea id="sAddr" rows="2" required autocomplete="street-address"></textarea></div>
+        <p class="err" id="sErr" role="alert"></p>
+        <button class="btn btn-wa wide" type="submit">Send enquiry on WhatsApp</button>
+      </form>
       <p class="note">Prescription medicines are supplied only against a valid doctor's prescription.</p>
     </div>
-    <form class="card form" id="storeForm" novalidate>
-      <div class="field"><label for="sName">Your name</label><input id="sName" required autocomplete="name"></div>
-      <div class="field"><label for="sNeed">Medicines / products needed</label><textarea id="sNeed" rows="3" required placeholder="Or write 'sending prescription photo'"></textarea></div>
-      <div class="field"><label for="sAddr">Delivery address</label><textarea id="sAddr" rows="2" required autocomplete="street-address"></textarea></div>
-      <p class="err" id="sErr" role="alert"></p>
-      <button class="btn btn-wa wide" type="submit">Send enquiry on WhatsApp</button>
-      <p class="muted small">Attach the prescription photo in WhatsApp after the chat opens.</p>
-    </form>
-  </div>
-</section>
-
-<!-- REPORTS -->
-<section id="reports" class="section alt">
-  <div class="wrap two-col">
-    <div>
-      <p class="eyebrow">Lab reports</p>
-      <h2>Get your report on WhatsApp</h2>
-      <p>For your privacy, reports are sent only to the mobile number registered at booking. Most routine reports are ready the same day.</p>
-      <p class="note">Reports are for review by your doctor. Please consult a physician for interpretation.</p>
+    <div id="reports" class="panel">
+      <h2>Get your report</h2>
+      <p>For your privacy, reports go only to the mobile number registered at booking. Send this from that number.</p>
+      <form class="form" id="reportForm" novalidate>
+        <div class="field"><label for="rName">Patient name</label><input id="rName" required autocomplete="name"></div>
+        <div class="two">
+          <div class="field"><label for="rDate">Test date</label><input id="rDate" type="date" required></div>
+          <div class="field"><label for="rId">Bill number (optional)</label><input id="rId"></div>
+        </div>
+        <p class="err" id="rErr" role="alert"></p>
+        <button class="btn btn-wa wide" type="submit">Request my report</button>
+      </form>
+      <p class="note">Reports are for your doctor's review. Please consult a physician to interpret results.</p>
     </div>
-    <form class="card form" id="reportForm" novalidate>
-      <div class="field"><label for="rName">Patient name</label><input id="rName" required autocomplete="name"></div>
-      <div class="two">
-        <div class="field"><label for="rDate">Test date</label><input id="rDate" type="date" required></div>
-        <div class="field"><label for="rId">Receipt / bill no. (optional)</label><input id="rId"></div>
-      </div>
-      <p class="err" id="rErr" role="alert"></p>
-      <button class="btn btn-wa wide" type="submit">Request my report</button>
-      <p class="muted small">Send this from your registered mobile number.</p>
-    </form>
   </div>
 </section>
 
-<!-- CONTACT / ABOUT -->
-<section id="contact" class="section">
-  <div class="wrap two-col">
+<section id="contact" class="section visit">
+  <div class="wrap duo">
     <div>
-      <p class="eyebrow">About & contact</p>
-      <h2>Your neighbourhood lab in Manjari BK</h2>
-      <p>Pharmapath Pathology Lab offers routine and specialised blood tests, health checkup packages, home sample collection, home care services and a medical store for families in Manjari BK and surrounding areas.</p>
+      <h2>Visit the lab</h2>
+      <p>Pharmapath Pathology Lab offers routine and specialised blood tests, health checkups, home collection, home care and a medical store for families in Manjari BK and nearby.</p>
       <dl class="info">
         <dt>Address</dt><dd id="cAddr"></dd>
-        <dt>WhatsApp / Call</dt><dd><a id="cPhone" href="tel:+919172899472"></a> <button class="link-btn" id="copyBtn" type="button">Copy</button></dd>
+        <dt>Phone and WhatsApp</dt><dd><a id="cPhone" href="tel:+919172899472"></a> <button class="link-btn" id="copyBtn" type="button">Copy</button></dd>
         <dt>Hours</dt><dd id="cHours"></dd>
       </dl>
       <div class="cta-row">
         <a class="btn btn-wa" id="cWa" href="https://wa.me/919172899472" target="_blank" rel="noopener">Chat on WhatsApp</a>
-        <a class="btn btn-ghost" id="cDir" href="#" target="_blank" rel="noopener">Get directions</a>
+        <a class="btn btn-line" id="cDir" href="#" target="_blank" rel="noopener">Get directions</a>
       </div>
     </div>
-    <div class="map card">
-      <iframe id="mapFrame" title="Map to Pharmapath Pathology Lab" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
+    <div class="map"><iframe id="mapFrame" title="Map to Pharmapath Pathology Lab" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
   </div>
 </section>
 </main>
 
 <footer class="footer">
   <div class="wrap foot">
-    <p><b>Pharmapath Pathology Lab</b><br><span id="fAddr"></span></p>
-    <p><a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms & conditions</a></p>
-    <p class="muted small">© <span id="yr"></span> Pharmapath Pathology Lab</p>
+    <div><b>Pharmapath Pathology Lab</b><p id="fAddr"></p></div>
+    <p><a href="privacy.html">Privacy policy</a> &nbsp; <a href="terms.html">Terms and conditions</a></p>
+    <p class="small">© <span id="yr"></span> Pharmapath Pathology Lab</p>
   </div>
 </footer>
 
-<!-- Mobile app-style bottom bar -->
 <nav class="appbar" aria-label="Quick actions">
-  <a href="#home">Home</a><a href="#packages">Packages</a><a class="primary" href="#book">Book</a><a href="#reports">Reports</a><a href="#contact">Contact</a>
+  <a href="#home">Home</a><a href="#packages">Packages</a><a class="primary" href="#book">Book</a><a href="#reports">Reports</a><a href="#contact">Visit</a>
 </nav>
 <a class="wa-float" id="waFloat" href="https://wa.me/919172899472" target="_blank" rel="noopener" aria-label="Chat with Pharmapath on WhatsApp">
   <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3 1 2.6 1.1 2.7.1.2 1.9 2.9 4.6 4 1.7.7 2.4.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg>
 </a>
-<div class="install card" id="installBar" hidden>
-  <span>Install the Pharmapath app on your phone</span>
+<div class="install" id="installBar" hidden>
+  <span>Add Pharmapath to your home screen</span>
   <button class="btn btn-teal" id="installBtn" type="button">Install</button>
   <button class="link-btn" id="installClose" type="button" aria-label="Dismiss">✕</button>
 </div>

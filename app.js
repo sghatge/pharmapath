@@ -6,12 +6,17 @@
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const inr = n => "₹" + Number(n).toLocaleString("en-IN");
   const picked = new Set();
-  const CATS = { all: "All", blood: "Blood", sugar: "Diabetes", heart: "Heart", organ: "Liver & Kidney", hormone: "Thyroid & Vitamins", urine: "Urine" };
+  /* Category colours follow real collection-tube caps */
+  const CATS = {
+    all: ["All", ""], blood: ["Blood", "#8E6CCF"], sugar: ["Diabetes", "#8C979E"], heart: ["Heart", "#E0A526"],
+    organ: ["Liver and kidney", "#D2463C"], hormone: ["Thyroid and vitamins", "#4FA7DA"], urine: ["Urine", "#E8C547"]
+  };
   let cat = "all";
 
   /* WhatsApp — always URL-encode; fall back to same tab if popup blocked */
+  const waURL = lines => "https://wa.me/" + L.whatsapp + "?text=" + encodeURIComponent(lines.filter(Boolean).join("\n"));
   function openWA(lines) {
-    const url = "https://wa.me/" + L.whatsapp + "?text=" + encodeURIComponent(lines.filter(Boolean).join("\n"));
+    const url = waURL(lines);
     const w = window.open(url, "_blank", "noopener");
     if (!w) window.location.href = url;
   }
@@ -27,19 +32,37 @@
   });
   nav.addEventListener("click", e => { if (e.target.tagName === "A") { nav.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); } });
 
-  /* Packages */
+  /* Hero tube rack */
+  const rack = $("#rack");
+  const maxPrice = Math.max(...P.map(p => p.price || 0)) || 1;
+  rack.innerHTML = P.map(p => {
+    const lvl = p.price ? Math.round(38 + 50 * (p.price / maxPrice)) : 22;
+    const label = p.price ? inr(p.price) : "Soon";
+    return `<button type="button" role="listitem" class="tube${p.tag === "Most booked" ? " feat" : ""}" data-pkg="${esc(p.id)}" style="--c:${p.cap};--lvl:${lvl}%"
+      aria-label="${esc(p.name)}, ${p.price ? inr(p.price) : "price coming soon"}. Book this package">
+      <span class="cap"></span><span class="glass"><span class="fill"></span><span class="label">${label}<small>${p.tests.length > 1 ? p.tests.length + " tests" : "Ask us"}</small></span></span>
+      <span class="name">${esc(p.short || p.name)}</span></button>`;
+  }).join("");
+  rack.classList.add("pre");
+  requestAnimationFrame(() => requestAnimationFrame(() => rack.classList.remove("pre")));
+
+  /* Packages: featured package gets the wide card */
   function pkgCard(p) {
-    const price = p.price == null ? '<span class="price" style="font-size:1.2rem">Price on request</span>'
-      : `<span class="price">${inr(p.price)}</span>${p.mrp ? `<s class="mrp">${inr(p.mrp)}</s>` : ""}`;
-    return `${p.tag ? `<span class="tag${p.price == null ? " soon" : ""}">${esc(p.tag)}</span>` : ""}
-      <h3>${esc(p.name)}</h3><p class="who">${esc(p.who)}</p><div>${price}</div>
-      <ul>${p.tests.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
-      ${p.fasting ? '<p class="fast">10–12 hrs fasting required</p>' : ""}
-      <button class="btn ${p.price == null ? "btn-ghost" : "btn-wa"}" type="button" data-pkg="${esc(p.id)}">${p.price == null ? "Ask on WhatsApp" : "Book this package"}</button>`;
+    const feat = p.tag === "Most booked";
+    const price = p.price == null ? '<span class="price ask">Price on request</span>'
+      : `<span class="price">${inr(p.price)}</span>${p.mrp ? `<s class="mrp">${inr(p.mrp)}</s><span class="save">Save ${Math.round(100 - 100 * p.price / p.mrp)}%</span>` : ""}`;
+    return `<article class="pkg${feat ? " feat" : ""}" style="--c:${p.cap}">
+      ${p.tag ? `<span class="tag${p.price == null ? " soon" : ""}">${esc(p.tag)}</span>` : ""}
+      <div class="pkg-top"><span class="dot" aria-hidden="true"></span><h3>${esc(p.name)}</h3></div>
+      <p class="who">${esc(p.who)}</p>
+      <div class="price-row">${price}</div>
+      <ul class="incl" aria-label="Tests included">${p.tests.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+      ${p.fasting ? '<p class="fast">Fasting 10–12 hours</p>' : ""}
+      <button class="btn ${p.price == null ? "btn-ghost" : "btn-wa"}" type="button" data-pkg="${esc(p.id)}">${p.price == null ? "Ask on WhatsApp" : "Book this package"}</button>
+    </article>`;
   }
-  $("#pkgGrid").innerHTML = P.map(p => `<article class="card pkg">${pkgCard(p)}</article>`).join("");
-  const feat = P.find(p => p.tag === "Most booked") || P[0];
-  if (feat) $("#heroOffer").innerHTML = pkgCard(feat);
+  const ordered = [...P].sort((a, b) => (b.tag === "Most booked") - (a.tag === "Most booked"));
+  $("#pkgGrid").innerHTML = ordered.map(pkgCard).join("");
 
   const sel = $("#bPkg");
   P.forEach(p => { const o = document.createElement("option"); o.value = p.id; o.textContent = p.name + (p.price != null ? " — " + inr(p.price) : " — price on request"); sel.appendChild(o); });
@@ -50,12 +73,14 @@
     const p = P.find(x => x.id === b.dataset.pkg);
     if (p && p.price == null) { openWA(["Hi Pharmapath Lab,", "Please share details and price of the " + p.name + "."]); return; }
     sel.value = b.dataset.pkg;
+    updatePreview();
     location.hash = "book";
     $("#bName").focus({ preventScroll: true });
   });
 
   /* Tests */
-  $("#chips").innerHTML = Object.entries(CATS).map(([k, v]) => `<button type="button" class="chip" data-cat="${k}" aria-pressed="${k === cat}">${v}</button>`).join("");
+  $("#chips").innerHTML = Object.entries(CATS).map(([k, [v, c]]) =>
+    `<button type="button" class="chip" data-cat="${k}" aria-pressed="${k === cat}"${c ? ` style="--c:${c}"` : ""}>${c ? "<i aria-hidden=\"true\"></i>" : ""}${v}</button>`).join("");
   $("#chips").addEventListener("click", e => {
     const c = e.target.closest(".chip"); if (!c) return;
     cat = c.dataset.cat;
@@ -73,23 +98,23 @@
     const q = $("#testSearch").value.toLowerCase().trim();
     const list = T.filter(t => (cat === "all" || t.cat === cat) && (!q || t.n.toLowerCase().includes(q)));
     $("#testList").innerHTML = list.length ? list.map(t => {
-      const on = picked.has(t.n);
-      return `<li class="test"><div><b>${esc(t.n)}</b><small>${t.price != null ? inr(t.price) : "Price on request"}</small>${t.fasting ? ' · <small class="f">Fasting</small>' : ""}</div>
+      const on = picked.has(t.n), c = (CATS[t.cat] || [])[1] || "";
+      return `<li class="test" style="--c:${c}"><div><b>${esc(t.n)}</b><small>${t.price != null ? inr(t.price) : "Price on request"}</small>${t.fasting ? ' · <small class="f">Fasting</small>' : ""}</div>
         <button type="button" class="add" data-test="${esc(t.n)}" aria-pressed="${on}" aria-label="${on ? "Remove" : "Add"} ${esc(t.n)}">${on ? "Added ✓" : "Add"}</button></li>`;
-    }).join("") : '<li class="empty">No test found. Ask us on WhatsApp — we run many more tests.</li>';
+    }).join("") : '<li class="empty">No test matches that search. Ask us on WhatsApp; we run many more tests.</li>';
   }
   $("#testList").addEventListener("click", e => {
     const b = e.target.closest("[data-test]"); if (!b) return;
     const n = b.dataset.test;
     picked.has(n) ? picked.delete(n) : picked.add(n);
-    renderTests(); renderPicked();
+    renderTests(); renderPicked(); updatePreview();
   });
   function renderPicked() {
     const n = picked.size;
     $("#pickedBar").hidden = n === 0;
     $("#pickedCount").textContent = n + (n === 1 ? " test selected" : " tests selected");
     const box = $("#bTests");
-    box.textContent = n ? [...picked].join(", ") : "None — add from the Tests section above (optional)";
+    box.textContent = n ? [...picked].join(", ") : "None added yet. Pick them in the tests list above.";
     box.classList.toggle("muted", !n);
   }
 
@@ -103,51 +128,60 @@
   $("#bDate").value = iso(tomorrow); $("#bDate").min = iso(new Date());
   $("#rDate").max = iso(new Date());
 
+  const cleanPhone = () => val("bPhone").replace(/\D/g, "").replace(/^91(?=\d{10}$)/, "");
+  function bookingLines(forPreview) {
+    const mode = $('input[name="mode"]:checked').value, p = P.find(x => x.id === sel.value);
+    const blank = forPreview ? "…" : "";
+    return [
+      "Hi Pharmapath Lab, I want to book a test.",
+      "Name: " + (val("bName") || blank) + (val("bAge") ? " (Age " + val("bAge") + ")" : ""),
+      "Mobile: " + (cleanPhone() || blank),
+      p ? "Package: " + p.name + (p.price != null ? " (" + inr(p.price) + ")" : "") : "",
+      picked.size ? "Tests: " + [...picked].join(", ") : "",
+      forPreview && !p && !picked.size ? "Package: …" : "",
+      "Type: " + mode,
+      mode === "Home sample collection" ? "Address: " + (val("bAddr") || blank) : "",
+      "Preferred: " + fmtDate(val("bDate")) + ", " + val("bSlot")
+    ].filter(Boolean);
+  }
+  function updatePreview() { $("#preview").textContent = bookingLines(true).join("\n"); }
+  $("#bookForm").addEventListener("input", updatePreview);
+  $("#bookForm").addEventListener("change", updatePreview);
+
   $("#bookForm").addEventListener("submit", e => {
     e.preventDefault();
     const err = $("#bErr"); err.textContent = "";
-    const name = val("bName"), phone = val("bPhone").replace(/\D/g, "").replace(/^91(?=\d{10}$)/, "");
-    const mode = $('input[name="mode"]:checked').value, addr = val("bAddr");
-    const p = P.find(x => x.id === sel.value);
-    if (!name) return fail(err, "Please enter the patient's name.", "bName");
-    if (!/^[6-9]\d{9}$/.test(phone)) return fail(err, "Please enter a valid 10-digit mobile number.", "bPhone");
-    if (!p && !picked.size) return fail(err, "Please choose a package or add at least one test.", "bPkg");
-    if (mode === "Home sample collection" && !addr) return fail(err, "Please enter the collection address.", "bAddr");
-    if (!val("bDate")) return fail(err, "Please choose a date.", "bDate");
-    if (!$("#bConsent").checked) return fail(err, "Please tick the consent box to continue.", "bConsent");
-    openWA([
-      "Hi Pharmapath Lab, I want to book a test.",
-      "Name: " + name + (val("bAge") ? " (Age " + val("bAge") + ")" : ""),
-      "Mobile: " + phone,
-      p ? "Package: " + p.name + (p.price != null ? " (" + inr(p.price) + ")" : "") : "",
-      picked.size ? "Tests: " + [...picked].join(", ") : "",
-      "Type: " + mode,
-      mode === "Home sample collection" ? "Address: " + addr : "",
-      "Preferred: " + fmtDate(val("bDate")) + ", " + val("bSlot")
-    ]);
+    const mode = $('input[name="mode"]:checked').value;
+    if (!val("bName")) return fail(err, "Enter the patient's name.", "bName");
+    if (!/^[6-9]\d{9}$/.test(cleanPhone())) return fail(err, "Enter a 10-digit mobile number starting with 6, 7, 8 or 9.", "bPhone");
+    if (!sel.value && !picked.size) return fail(err, "Choose a package, or add at least one test from the list.", "bPkg");
+    if (mode === "Home sample collection" && !val("bAddr")) return fail(err, "Enter the address where we should collect the sample.", "bAddr");
+    if (!val("bDate")) return fail(err, "Choose a date.", "bDate");
+    if (!$("#bConsent").checked) return fail(err, "Tick the consent box so we can contact you.", "bConsent");
+    openWA(bookingLines(false));
   });
 
   $("#storeForm").addEventListener("submit", e => {
     e.preventDefault();
     const err = $("#sErr"); err.textContent = "";
-    if (!val("sName")) return fail(err, "Please enter your name.", "sName");
-    if (!val("sNeed")) return fail(err, "Please tell us what you need.", "sNeed");
-    if (!val("sAddr")) return fail(err, "Please enter the delivery address.", "sAddr");
+    if (!val("sName")) return fail(err, "Enter your name.", "sName");
+    if (!val("sNeed")) return fail(err, "Tell us which medicines or products you need.", "sNeed");
+    if (!val("sAddr")) return fail(err, "Enter the delivery address.", "sAddr");
     openWA(["Hi Pharmapath, medicine delivery enquiry.", "Name: " + val("sName"), "Need: " + val("sNeed"), "Address: " + val("sAddr"), "(I will attach the prescription photo.)"]);
   });
 
   $("#reportForm").addEventListener("submit", e => {
     e.preventDefault();
     const err = $("#rErr"); err.textContent = "";
-    if (!val("rName")) return fail(err, "Please enter the patient's name.", "rName");
-    if (!val("rDate")) return fail(err, "Please enter the test date.", "rDate");
-    openWA(["Hi Pharmapath Lab, please send my report.", "Patient: " + val("rName"), "Test date: " + fmtDate(val("rDate")), val("rId") ? "Receipt no: " + val("rId") : ""]);
+    if (!val("rName")) return fail(err, "Enter the patient's name.", "rName");
+    if (!val("rDate")) return fail(err, "Enter the date of the test.", "rDate");
+    openWA(["Hi Pharmapath Lab, please send my report.", "Patient: " + val("rName"), "Test date: " + fmtDate(val("rDate")), val("rId") ? "Bill no: " + val("rId") : ""]);
   });
 
   function fail(el, msg, id) { el.textContent = msg; const f = document.getElementById(id); if (f) f.focus(); }
 
   /* Home care */
-  $("#careGrid").innerHTML = H.map(s => `<div class="card"><h3>${esc(s)}</h3><button class="btn btn-ghost" type="button" data-care="${esc(s)}">Request</button></div>`).join("");
+  $("#careGrid").innerHTML = H.map(s => `<button type="button" data-care="${esc(s)}">${esc(s)}</button>`).join("");
   $("#careGrid").addEventListener("click", e => {
     const b = e.target.closest("[data-care]"); if (!b) return;
     openWA(["Hi Pharmapath, I need a home care visit.", "Service: " + b.dataset.care, "Name: ", "Address: "]);
@@ -157,7 +191,8 @@
   const mapsQ = encodeURIComponent(L.mapsQuery);
   $("#cAddr").textContent = L.address; $("#fAddr").textContent = L.address;
   $("#cPhone").textContent = L.phoneDisplay; $("#cPhone").href = "tel:+" + L.whatsapp;
-  $("#cHours").textContent = L.hours; $("#heroHours").textContent = L.hours + ".";
+  $("#heroCall").href = "tel:+" + L.whatsapp;
+  $("#cHours").textContent = L.hours; $("#heroHours").textContent = L.hours;
   $("#cWa").href = $("#waFloat").href = "https://wa.me/" + L.whatsapp;
   $("#cDir").href = "https://www.google.com/maps/search/?api=1&query=" + mapsQ;
   $("#mapFrame").src = "https://www.google.com/maps?q=" + mapsQ + "&output=embed";
@@ -168,7 +203,7 @@
   });
   $("#yr").textContent = new Date().getFullYear();
 
-  renderTests(); renderPicked();
+  renderTests(); renderPicked(); updatePreview();
 
   /* PWA: service worker + install prompt */
   if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
@@ -178,7 +213,7 @@
   const dismissed = () => { try { return localStorage.getItem("pp-install-x") === "1"; } catch (_) { return false; } };
   window.addEventListener("beforeinstallprompt", e => {
     e.preventDefault(); deferred = e;
-    if (!dismissed()) $("#installBar").hidden = false;
+    if (!dismissed()) setTimeout(() => { $("#installBar").hidden = false; }, 6000);
   });
   $("#installBtn").addEventListener("click", async () => {
     $("#installBar").hidden = true;

@@ -3,6 +3,7 @@
    Open in Notepad, change values, save, re-upload this one file.
    price: number in ₹  |  price: null  -> shows "Price on request"
    mrp: earlier genuine price (shown struck out) — remove if not genuine
+   short: name on the hero tube  |  cap: tube cap colour
    ========================================================= */
 window.LAB = {
   name: "Pharmapath Pathology Lab",
@@ -14,13 +15,13 @@ window.LAB = {
 };
 
 window.PACKAGES = [
-  {id:"basic",    name:"Basic Health Package",     who:"Yearly routine check",          price:499,  tests:["CBC","Blood Sugar (Fasting)","Urine Routine","Serum Creatinine","Total Cholesterol"], fasting:true},
-  {id:"diabetes", name:"Diabetes Care Package",    who:"Sugar monitoring",              price:699,  tests:["HbA1c","Fasting Blood Sugar","Post Lunch Blood Sugar","Urine Routine"], fasting:true},
-  {id:"heart",    name:"Heart Care Package",       who:"Recommended after 40",          price:899,  tests:["ECG","Lipid Profile","Blood Sugar (Fasting)","Serum Creatinine","CBC"], fasting:true},
-  {id:"women",    name:"Women Health Package",     who:"Thyroid, anaemia and sugar",    price:999,  tests:["CBC","Thyroid Profile (TSH)","Blood Sugar","Urine Routine","Hemoglobin"]},
-  {id:"senior",   name:"Senior Citizen Package",   who:"For parents and elders",        price:1199, tests:["CBC","Blood Sugar (Fasting + PP)","Lipid Profile","LFT","KFT","Urine Routine"], fasting:true},
-  {id:"fullbody", name:"Full Body Checkup (C Pro)",who:"Complete body checkup",         price:1499, mrp:5400, tag:"Most booked", tests:["CBC","HbA1c","Lipid Profile","Liver Function Test (LFT)","Kidney Function Test (KFT)","Thyroid Profile","Urine Routine"], fasting:true},
-  {id:"gym",      name:"Gym Fitness Package",      who:"For gym-goers and athletes",    price:null, tag:"Coming soon", tests:["Tests to be announced — ask on WhatsApp"]}
+  {id:"basic", short:"Basic", cap:"#8E6CCF",    name:"Basic Health Package",     who:"Yearly routine check",          price:499,  tests:["CBC","Blood Sugar (Fasting)","Urine Routine","Serum Creatinine","Total Cholesterol"], fasting:true},
+  {id:"diabetes", short:"Diabetes", cap:"#8C979E", name:"Diabetes Care Package",    who:"Sugar monitoring",              price:699,  tests:["HbA1c","Fasting Blood Sugar","Post Lunch Blood Sugar","Urine Routine"], fasting:true},
+  {id:"heart", short:"Heart", cap:"#E0A526",    name:"Heart Care Package",       who:"Recommended after 40",          price:899,  tests:["ECG","Lipid Profile","Blood Sugar (Fasting)","Serum Creatinine","CBC"], fasting:true},
+  {id:"women", short:"Women", cap:"#D2463C",    name:"Women Health Package",     who:"Thyroid, anaemia and sugar",    price:999,  tests:["CBC","Thyroid Profile (TSH)","Blood Sugar","Urine Routine","Hemoglobin"]},
+  {id:"senior", short:"Senior", cap:"#4FA7DA",   name:"Senior Citizen Package",   who:"For parents and elders",        price:1199, tests:["CBC","Blood Sugar (Fasting + PP)","Lipid Profile","LFT","KFT","Urine Routine"], fasting:true},
+  {id:"fullbody", short:"Full body", cap:"#12A4A0", name:"Full Body Checkup (C Pro)",who:"Complete body checkup",         price:1499, mrp:5400, tag:"Most booked", tests:["CBC","HbA1c","Lipid Profile","Liver Function Test (LFT)","Kidney Function Test (KFT)","Thyroid Profile","Urine Routine"], fasting:true},
+  {id:"gym", short:"Gym", cap:"#3BA55C",      name:"Gym Fitness Package",      who:"For gym-goers and athletes",    price:null, tag:"Coming soon", tests:["Tests to be announced — ask on WhatsApp"]}
 ];
 
 /* cat: blood | sugar | organ | hormone | urine | heart */
