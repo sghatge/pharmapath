@@ -3,4 +3,4 @@
 :HL["/pharmapath/v2/_next/static/media/Geist_latin-s.p.0wgildi0cnwt9.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/pharmapath/v2/_next/static/media/Outfit_latin-s.p.1gsd1jahc5dg_.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 1:[["children",{"s":"__PAGE__","h":128}]]
-0:{"b":"wG6ktdBp3a9BKDqRPLGoN","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
+0:{"b":"i8WxWyEtv885ZV439iyj0","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
