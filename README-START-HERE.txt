@@ -72,7 +72,8 @@ STEP 5 — GOOGLE MAPS / SEO
 UPDATING PRICES LATER
 -------------------------------------------------
 Open data.js in Notepad -> change numbers -> save -> re-upload data.js.
-Also open sw.js and change  pp-v1  to  pp-v2  (so installed apps fetch the update).
+Then, in index.html, change every  ?v=4  to  ?v=5  (next time ?v=6, and so on),
+and in sw.js change  pp-v4  to  pp-v5. This makes phones load the new prices immediately.
 
 PRIVACY — IMPORTANT
 Do NOT put patient reports on the website (e.g. /reports/9172899472.pdf). Anyone could download
