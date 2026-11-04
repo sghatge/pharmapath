@@ -1,5 +1,5 @@
 /* Pharmapath offline support. Bump VERSION whenever you upload changed files. */
-const VERSION = "pp-v1";
+const VERSION = "pp-v2";
 const CORE = ["./", "index.html", "style.css", "app.js", "data.js", "manifest.json", "privacy.html", "terms.html", "offline.html",
   "icons/logo.svg", "icons/icon-192.png", "icons/icon-512.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(CORE)).then(() => self.skipWaiting())); });
