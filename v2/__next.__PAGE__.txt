@@ -1,0 +1,37 @@
+2:"$Sreact.fragment"
+3:"/pharmapath/v2/_next/static/chunks/2d5974rw6lgo2.js"
+4:"/pharmapath/v2/_next/static/chunks/2bqqgaxu_jy7q.js"
+5:"/pharmapath/v2/_next/static/chunks/3-nq-leombtp2.js"
+6:I[83751,["$3","$4","$5"],"Navbar"]
+7:I[9425,["$3","$4","$5"],"Hero"]
+8:I[15620,["$3","$4","$5"],"TestMarquee"]
+9:I[15620,["$3","$4","$5"],"StatsBar"]
+a:I[15620,["$3","$4","$5"],"HowItWorks"]
+b:I[42737,["$3","$4","$5"],"Packages"]
+c:I[10110,["$3","$4","$5"],"Tests"]
+d:I[58031,["$3","$4","$5"],"Booking"]
+e:I[63633,["$3","$4","$5"],"HomeCare"]
+f:I[63633,["$3","$4","$5"],"StoreAndReports"]
+10:I[90284,["$3","$4","$5"],"WhyUs"]
+11:I[90284,["$3","$4","$5"],"Faq"]
+12:I[44555,["$3","$4","$5"],"Contact"]
+13:I[14253,["$3","$4","$5"],"Footer"]
+14:I[93866,["$3","$4","$5"],"CartDrawer"]
+15:I[77587,["$3","$4","$5"],"FloatingCta"]
+16:I[97367,["$3","$4"],"OutletBoundary"]
+17:"$Sreact.suspense"
+1b:"ViewportBoundary"
+1c:I[97367,["$3","$4"],"$1b"]
+1d:"MetadataBoundary"
+1e:I[97367,["$3","$4"],"$1d"]
+1f:I[27201,["$3","$4"],"IconMark"]
+1a:X
+1:[["children",{"s":"__PAGE__","h":128,"d":{"r":["$","$2","c",{"children":[["$","div",null,{"className":"flex min-h-screen flex-col","children":[["$","$L6",null,{}],["$","main",null,{"className":"flex-1","children":[["$","$L7",null,{}],["$","$L8",null,{}],["$","$L9",null,{}],["$","$La",null,{}],["$","$Lb",null,{}],["$","$Lc",null,{}],["$","$Ld",null,{}],["$","$Le",null,{}],["$","$Lf",null,{}],["$","$L10",null,{}],["$","$L11",null,{}],["$","$L12",null,{}]]}],["$","$L13",null,{}],["$","$L14",null,{}],["$","$L15",null,{}]]}],[["$","script","script-0",{"src":"/pharmapath/v2/_next/static/chunks/3-nq-leombtp2.js","async":true}]],["$","$L16",null,{"children":["$","$17",null,{"name":"Next.MetadataOutlet","children":"$@18"}]}]]}],"p":"$@19","v":null,"s":"$1a"}}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L1c",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"#f7fdfc","media":"(prefers-color-scheme: light)"}],["$","meta","3",{"name":"theme-color","content":"#0e1a1f","media":"(prefers-color-scheme: dark)"}]]}],["$","$L1e",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$17",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Pharmapath Pathology Lab — Accurate lab tests, collected at your home | Manjari BK, Pune"}],["$","meta","1",{"name":"description","content":"Health checkups from ₹499, free home sample collection, same-day reports on WhatsApp, home care nursing and a medical store with delivery. Open 24 hours in Manjari BK, Pune."}],["$","link","2",{"rel":"manifest","href":"/pharmapath/v2/manifest.webmanifest"}],["$","meta","3",{"name":"keywords","content":"pathology lab Manjari,blood test Pune,home sample collection,full body checkup,health packages,Pharmapath"}],["$","link","4",{"rel":"canonical","href":"https://sghatge.github.io/pharmapath/v2/"}],["$","meta","5",{"name":"mobile-web-app-capable","content":"yes"}],["$","meta","6",{"name":"apple-mobile-web-app-title","content":"Pharmapath"}],["$","meta","7",{"name":"apple-mobile-web-app-status-bar-style","content":"default"}],["$","meta","8",{"property":"og:title","content":"Pharmapath Pathology Lab — Care that comes home"}],["$","meta","9",{"property":"og:description","content":"Free home sample collection, reports on WhatsApp, home care & medical store. Open 24 hours in Manjari BK, Pune."}],["$","meta","10",{"property":"og:site_name","content":"Pharmapath Pathology Lab"}],["$","meta","11",{"property":"og:locale","content":"en_IN"}],["$","meta","12",{"property":"og:image","content":"https://sghatge.github.io/pharmapath/v2/og-image.jpg"}],["$","meta","13",{"property":"og:image:width","content":"1200"}],["$","meta","14",{"property":"og:image:height","content":"630"}],["$","meta","15",{"property":"og:image:alt","content":"Pharmapath Pathology Lab, Manjari BK — checkups from ₹499, free home collection"}],["$","meta","16",{"property":"og:type","content":"website"}],["$","meta","17",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","18",{"name":"twitter:title","content":"Pharmapath Pathology Lab — Care that comes home"}],["$","meta","19",{"name":"twitter:description","content":"Free home sample collection, reports on WhatsApp, home care & medical store. Open 24 hours in Manjari BK, Pune."}],["$","meta","20",{"name":"twitter:image","content":"https://sghatge.github.io/pharmapath/v2/og-image.jpg"}],["$","link","21",{"rel":"icon","href":"/pharmapath/v2/favicon.ico","sizes":"any"}],["$","link","22",{"rel":"icon","href":"/pharmapath/v2/logo.svg","type":"image/svg+xml"}],["$","link","23",{"rel":"icon","href":"/pharmapath/v2/icons/icon-192.png","type":"image/png","sizes":"192x192"}],["$","link","24",{"rel":"apple-touch-icon","href":"/pharmapath/v2/icons/apple-touch-icon.png"}],["$","$L1f","25",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@20","v":null,"s":"$1a"}},"a":"$@21","u":"$@22","b":"Fp-P1kTLniNQ0vSOD-8Jg"}
+18:null
+22:true
+1a:300
+1a:C
+21:0
+20:"$undefined"
+19:"$undefined"
