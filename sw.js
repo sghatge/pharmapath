@@ -1,5 +1,5 @@
 /* Pharmapath offline support. Bump VERSION whenever you upload changed files. */
-const VERSION = "pp-v3";
+const VERSION = "pp-v4";
 const CORE = ["./", "index.html", "style.css", "app.js", "data.js", "manifest.json", "privacy.html", "terms.html", "offline.html",
   "icons/logo.svg", "icons/icon-192.png", "icons/icon-512.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(CORE)).then(() => self.skipWaiting())); });
@@ -14,8 +14,7 @@ self.addEventListener("fetch", e => {
       .catch(() => caches.match(req).then(r => r || caches.match("index.html")).then(r => r || caches.match("offline.html"))));
     return;
   }
-  e.respondWith(caches.match(req).then(hit => {
-    const net = fetch(req).then(r => { if (r.ok) { const c = r.clone(); caches.open(VERSION).then(x => x.put(req, c)); } return r; }).catch(() => hit);
-    return hit || net;
-  }));
+  // everything else: network first so updates show immediately; cache only when offline
+  e.respondWith(fetch(req).then(r => { if (r.ok) { const c = r.clone(); caches.open(VERSION).then(x => x.put(req, c)); } return r; })
+    .catch(() => caches.match(req)));
 });
